@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>نظام التحضير - مقرأة رفد الخير</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@500;700;800&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <style>
+        :root {
+            --pink-main: #f381b0;
+            --pink-light: #f8a4c8;
+            --pink-bg: #fde8f1;
+            --tiffany-main: #73cadb;
+            --tiffany-light: #bce3f1;
+            --tiffany-bg: #eaf6fa;
+            --yellow-accent: #f5cb5c;
+            --mint-accent: #82ca8a;
+            --text-dark: #3a3a3a;
+            --font-logo: 'Baloo Bhaijaan 2', 'Tajawal', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-logo);
+        }
+
+        body {
+            background-color: #f7f9fb;
+            background-image: radial-gradient(#bce3f1 1.5px, transparent 1.5px), radial-gradient(#f8a4c8 1.5px, #f7f9fb 1.5px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--pink-main) 0%, var(--yellow-accent) 50%, var(--tiffany-main) 100%);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 25px rgba(243, 129, 176, 0.25);
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.18);
+        }
+
+        .sub-title {
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 22px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            font-weight: 700;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .role-switcher {
+            display: flex;
+            justify-content: center;
+            background: white;
+            padding: 8px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border: 2px solid var(--tiffany-light);
+        }
+
+        .role-btn {
+            flex: 1;
+            max-width: 200px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-dark);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .role-btn.active {
+            background: var(--pink-main);
+            color: white;
+            box-shadow: 0 4px 12px rgba(243, 129, 176, 0.4);
+        }
+
+        .card {
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 3px solid var(--tiffany-bg);
+            margin-bottom: 30px;
+        }
+
+        .welcome-head {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed var(--pink-light);
+        }
+
+        .welcome-head h2 {
+            color: var(--pink-main);
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #444;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        label i { color: var(--tiffany-main); }
+
+        input[type="text"], input[type="password"], input[type="date"], textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--pink-main);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(243, 129, 176, 0.15);
+        }
+
+        .status-section-title {
+            grid-column: 1 / -1;
+            font-size: 1.2rem;
+            color: var(--tiffany-main);
+            font-weight: 800;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            padding-right: 10px;
+            border-right: 4px solid var(--tiffany-main);
+        }
+
+        .badge-present { color: #2e7d32; }
+        .badge-absent-no { color: #c62828; }
+        .badge-absent-yes { color: #ef6c00; }
+        .badge-late { color: #6a1b9a; }
+        .badge-listener { color: #1565c0; }
+        .badge-withdrawn { color: #424242; }
+        .badge-new { color: #00838f; }
+
+        .btn-submit {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--tiffany-main), #52b3c7);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 18px rgba(115, 202, 219, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(115, 202, 219, 0.45);
+        }
+
+        .admin-section { display: none; }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .admin-title {
+            color: var(--pink-main);
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .admin-actions { display: flex; gap: 10px; }
+
+        .btn-action {
+            padding: 10px 18px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-excel { background: #e8f5e9; color: #2e7d32; }
+        .btn-print { background: #e3f2fd; color: #1565c0; }
+
+        .filter-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            background: var(--tiffany-bg);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .filter-box input { flex: 1; min-width: 200px; background: white; }
+
+        .records-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .record-card {
+            background: white;
+            border-radius: 20px;
+            border: 2px solid var(--pink-bg);
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .record-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #f0f0f0;
+        }
+
+        .circle-name { font-size: 1.25rem; font-weight: 800; color: var(--pink-main); }
+        .teacher-name { font-size: 0.95rem; color: #666; font-weight: 700; }
+        .record-date { background: var(--tiffany-bg); color: var(--tiffany-main); padding: 3px 10px; border-radius: 10px; font-size: 0.85rem; font-weight: 700; }
+
+        .record-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .detail-item { background: #fdfdfd; padding: 10px; border-radius: 10px; border: 1px solid #f0f0f0; }
+        .detail-item label { font-size: 0.85rem; font-weight: 800; display: block; margin-bottom: 2px; }
+        .detail-item span { font-weight: 6
